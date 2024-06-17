@@ -21,17 +21,14 @@
         <activity
             android:name=".flyingfish.GameOverActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
             android:exported="false" />
         <activity
             android:name=".flyingfish.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
             android:exported="false" />
         <activity
             android:name=".flyingfish.FishMainActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
             android:exported="false" />
         <activity
             android:name=".planeshooter.MainActivity"

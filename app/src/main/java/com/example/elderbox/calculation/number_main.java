@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.elderbox.R;
+import com.example.elderbox.music;
 
 import java.util.Random;
 
@@ -266,5 +267,19 @@ public class number_main extends AppCompatActivity   {
             }
         });
 
+    }
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        music.stop(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        music.play(this, R.raw.betterday);
     }
 }
