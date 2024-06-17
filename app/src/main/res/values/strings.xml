@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">ElderBox</string>
+    <string name="start_game">Start Game</string>
+
+    <string name="restart">Restart</string>
+    <string name="exit">Exit</string>
+
+    <string name="score">Score: </string>
+    <string name="personal_best">Personal best: </string>
+
+    <string name="LogIn">Log In</string>
+    <string name="SignIn">Sign In</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="usernamehint">Type your username</string>
+    <string name="passwordhint">Type your password</string>
+    <string name="ps">Please select</string>
+    <string name="game">Game</string>
+    <string name="LogOut">Log Out</string>
+
+    <string name="Plane">Plane Shooter</string>
+    <string name="Fish">Flying Fish</string>
+    <string name="num">Numbers</string>
+    <string name="Std">Spot Difference</string>
+
+    <string name="game_over">Game Over</string>
+    <string name="play_again">Play Again</string>
+
+    <string name="flying_fish">The Flying Fish</string>
+</resources>
