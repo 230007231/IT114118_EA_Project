@@ -58,4 +58,9 @@ public class Menu extends AppCompatActivity {
             }
         });
     }
+    public void back(View view) {
+        Intent intent = new Intent(Menu.this, Login.class);
+        startActivity(intent);
+        finish();
+    }
 }
