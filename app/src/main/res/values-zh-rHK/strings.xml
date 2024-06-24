@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">老遊記</string>
+    <string name="start_game">開始遊戲</string>
+    <string name="restart">再玩</string>
+    <string name="exit">離開</string>
+    <string name="score">"分數: "</string>
+    <string name="personal_best">"最高紀錄: "</string>
+    <string name="LogIn">登入</string>
+    <string name="SignIn">註冊</string>
+    <string name="username">用戶名稱</string>
+    <string name="password">密碼</string>
+    <string name="usernamehint">請輸入用戶名稱</string>
+    <string name="passwordhint">請輸入用戶密碼</string>
+    <string name="ps">請選擇</string>
+    <string name="game">遊戲</string>
+    <string name="LogOut">登出</string>
+    <string name="Plane">打飛機</string>
+    <string name="Fish">飛魚遊戲</string>
+    <string name="num">計算遊戲</string>
+    <string name="Std">找不同</string>
+    <string name="game_over">遊戲結束</string>
+    <string name="play_again">再玩</string>
+    <string name="flying_fish">飛魚遊戲</string>
+    <string name="Retype">重新輸入密碼</string>
+    <string name="Back">返回</string>
+    <string name="record">遊玩紀錄</string>
+    <string name="ranking">排行榜</string>
+    <string name="email">電郵:</string>
+</resources>

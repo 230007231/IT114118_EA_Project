@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash"
+    android:textAlignment="center"
+    tools:context=".flyingfish.GameOverActivity">
+
+    <TextView
+        android:id="@+id/gameOverTextId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="120dp"
+        android:text="@string/game_over"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/play_again_button_id"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gameOverTextId"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorAccent"
+        android:padding="10dp"
+        android:text="@string/play_again"
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/Score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/score"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@id/play_again_button_id"
+        android:layout_marginTop="70sp"
+        />
+
+    <TextView
+        android:id="@+id/displayScoreId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="score"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@id/Score"
+        android:layout_marginTop="10sp"
+        />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/exit"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        />
+
+</RelativeLayout>
