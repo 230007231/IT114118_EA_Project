@@ -92,7 +92,7 @@ public class Login extends AppCompatActivity {
         finish();
     }
     public void back(View view) {
-        Intent intent = new Intent(Login.this, First.class);
+        Intent intent = new Intent(Login.this, Menu.class);
         startActivity(intent);
         finish();
     }
