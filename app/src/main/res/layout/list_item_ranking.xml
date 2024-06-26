@@ -12,10 +12,26 @@
         <TextView
             android:id="@+id/playername"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:gravity="center"
+            android:layout_weight="1"
             android:text="Player Name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"/>
+
+        <Button
+            android:id="@+id/btnback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="@string/Back"
+            android:onClick="back"
+            android:background="#44a6c6"
+            android:textColor="@android:color/white"/>
 
     </LinearLayout>
 

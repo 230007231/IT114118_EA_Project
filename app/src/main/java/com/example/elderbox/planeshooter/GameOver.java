@@ -11,24 +11,30 @@ import com.example.elderbox.R;
 
 public class GameOver extends Activity {
 
-    TextView tvScore, tvPersonalBest;
+    TextView tvName, tvScore, tvPersonalBest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plane_game_over);
-        int score = getIntent().getExtras().getInt("score");
-        SharedPreferences pref = getSharedPreferences("MyPref", 0);
+
+        int score1 = getIntent().getExtras().getInt("score");
+
+        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         int scoreSP = pref.getInt("scoreSP", 0);
+        String playerName = pref.getString("name", ""); // if no, set blank as result
         SharedPreferences.Editor editor = pref.edit();
-        if(score > scoreSP){
-            scoreSP = score;
+        editor.putInt("score1", score1);
+        if(score1 > scoreSP){
+            scoreSP = score1;
             editor.putInt("scoreSP", scoreSP);
             editor.commit();
         }
+        tvName = (TextView) findViewById(R.id.tvName);
         tvScore = (TextView) findViewById(R.id.tvScore);
         tvPersonalBest = (TextView) findViewById(R.id.tvPersonalBest);
-        tvScore.setText(""+score);
+        tvName.setText(""+playerName);
+        tvScore.setText(""+score1);
         tvPersonalBest.setText(""+scoreSP);
     }
     public void restart(View view){

@@ -7,12 +7,23 @@
     android:background="@drawable/bg_main"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/btnback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="left"
+        android:text="@string/Back"
+        android:onClick="back"
+        android:background="#44a6c6"
+        android:textColor="@android:color/white"/>
+
     <TextView
         android:fontFamily="sans-serif-condensed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:text="@string/ps"
         android:textColor="#000000"
         android:textSize="45sp" />

@@ -1,6 +1,7 @@
 package com.example.elderbox;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -27,9 +28,10 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
-    private EditText etEmail, etPassword;
-    private String email, password;
+    private EditText etName, etPassword;
+    private String name, password;
     private String URL = "http://10.0.2.2/login/login.php";
+    String result = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,8 @@ public class Login extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        email = password = "";
-        etEmail = findViewById(R.id.etEmail);
+        name = password = "";
+        etName = findViewById(R.id.etName);
         etPassword = findViewById(R.id.etPassword);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -48,14 +50,23 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(View view) {
-        email = etEmail.getText().toString().trim();
+        name = etName.getText().toString().trim();
         password = etPassword.getText().toString().trim();
-        if(!email.equals("") && !password.equals("")){
+        if(!name.equals("") && !password.equals("")){
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     if (response.equals("success")) {
                         Intent intent = new Intent(Login.this, Menu.class);
+
+                        intent.putExtra("name", name); // hold the player's name
+
+                        // Save the name in SharedPreferences
+                        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("name", name);
+                        editor.apply();
+
                         startActivity(intent);
                         finish();
                     } else if (response.equals("failure")) {
@@ -72,7 +83,7 @@ public class Login extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> data = new HashMap<>();
-                    data.put("email", email);
+                    data.put("name", name);
                     data.put("password", password);
                     return data;
                 }

@@ -3,15 +3,18 @@
 package com.example.elderbox.record;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.elderbox.R;
+import com.example.elderbox.ranking.Ranking;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -156,6 +159,11 @@ public class Record extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
+    }
+    public void back(View view) {
+        Intent intent = new Intent(Record.this, com.example.elderbox.Menu.class);
+        startActivity(intent);
+        finish();
     }
 }
 

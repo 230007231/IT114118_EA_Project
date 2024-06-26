@@ -64,6 +64,12 @@ public class Selectpage extends AppCompatActivity {
             }
         });
     }
+
+    public void back(View view) {
+        Intent intent = new Intent(Selectpage.this, Menu.class);
+        startActivity(intent);
+        finish();
+    }
     @Override
     protected void onPause() {
         // TODO Auto-generated method stub

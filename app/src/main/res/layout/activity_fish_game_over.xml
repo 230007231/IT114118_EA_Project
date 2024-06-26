@@ -14,11 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="120dp"
         android:text="@string/game_over"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
-        android:textSize="48sp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <Button
@@ -34,31 +33,91 @@
         android:textColor="@android:color/background_light"
         android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/Score"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/score"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorAccent"
-        android:layout_below="@id/play_again_button_id"
-        android:layout_marginTop="70sp"
-        />
 
-    <TextView
-        android:id="@+id/displayScoreId"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="score"
-        android:textAlignment="center"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorAccent"
-        android:layout_below="@id/Score"
-        android:layout_marginTop="10sp"
-        />
+        android:id="@+id/box_name"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/play_again_button_id">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:textColor="#000000"
+            android:text="@string/username" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/background_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Player" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/box_score"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/box_name">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="@string/score" />
+
+        <TextView
+            android:id="@+id/tvScore"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_orange_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/box_best"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/box_score">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="@string/personal_best" />
+
+        <TextView
+            android:id="@+id/tvPersonalBest"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="TextView" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button2"

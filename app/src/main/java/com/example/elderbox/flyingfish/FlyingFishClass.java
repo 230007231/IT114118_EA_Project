@@ -27,13 +27,13 @@ public class FlyingFishClass extends View {
     private boolean touch = false;
     private int score, lifeCounterOfFish;
 
-    private int yellowX, yellowY, yellowSpeed = 30;
+    private int yellowX, yellowY, yellowSpeed = 10;
     private Paint yellowPaint = new Paint();
 
-    private int greenX, greenY, greenSpeed = 40;
+    private int greenX, greenY, greenSpeed = 30;
     private Paint greenPaint = new Paint();
 
-    private int redX, redY, redSpeed = 40;
+    private int redX, redY, redSpeed = 25;
     private Paint redPaint = new Paint();
 
 
@@ -114,7 +114,7 @@ public class FlyingFishClass extends View {
             yellowX = canvasWidth + 21;
             yellowY = (int) Math.floor(Math.random() * (maxFishY - minFishY)) + minFishY;
         }
-        canvas.drawCircle(yellowX, yellowY, 95, yellowPaint);
+        canvas.drawCircle(yellowX, yellowY, 45, yellowPaint);
 
         //green Ball
 
@@ -128,7 +128,7 @@ public class FlyingFishClass extends View {
             greenX = canvasWidth + 21;
             greenY = (int) Math.floor(Math.random() * (maxFishY - minFishY)) + minFishY;
         }
-        canvas.drawCircle(greenX, greenY, 85, greenPaint);
+        canvas.drawCircle(greenX, greenY, 35, greenPaint);
 
 
         //red Ball
@@ -153,7 +153,7 @@ public class FlyingFishClass extends View {
             redX = canvasWidth + 21;
             redY = (int) Math.floor(Math.random() * (maxFishY - minFishY)) + minFishY;
         }
-        canvas.drawCircle(redX, redY, 105, redPaint);
+        canvas.drawCircle(redX, redY, 55, redPaint);
 
         canvas.drawText("Score : " + score, 20, 60, scorePaint);
 
@@ -182,7 +182,7 @@ public class FlyingFishClass extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             touch = true;
-            fishSpeed = -28;
+            fishSpeed = -18;
         }
         return true;
     }
