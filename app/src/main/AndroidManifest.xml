@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/ebox"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ebox"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PlaneShooter"
+        tools:targetApi="31">
+        <activity
+            android:name=".Signin"
+            android:exported="false" />
+        <activity
+            android:name=".finddifference.Std"
+            android:exported="true" />
+        <activity
+            android:name=".calculation.number_main"
+            android:exported="true" />
+        <activity
+            android:name=".flyingfish.GameOverActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".flyingfish.SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".flyingfish.FishMainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".planeshooter.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".Menu"
+            android:exported="false" />
+        <activity
+            android:name=".ranking.Ranking"
+            android:exported="false" />
+        <activity
+            android:name=".record.Record"
+            android:exported="false" />
+        <activity
+            android:name=".First"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Selectpage"
+            android:exported="true" />
+        <activity
+            android:name=".planeshooter.StartGame"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".planeshooter.GameOver"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".calculation.number_menu"
+            android:exported="false" />
+        <activity
+            android:name=".calculation.number_score_page"
+            android:exported="false" />
+        <activity
+            android:name=".calculation.number_MainActivity"
+            android:exported="false" />
+
+        <service android:enabled="true" android:name=".calculation.backgroundMusic" />
+        <service android:enabled="true" android:name=".finddifference.finddifference_backgroundMusic" />
+
+        <activity
+            android:name=".finddifference.finddifference_MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".finddifference.finddifference_menu"
+            android:exported="false" />
+
+        <activity
+            android:name=".finddifference.finddifference_score_page"
+            android:exported="false" />
+
+        <activity
+            android:name=".finddifference.finddifference_stage1"
+            android:exported="false" />
+
+        <activity
+            android:name=".finddifference.finddifference_stage2"
+            android:exported="false" />
+
+        <activity
+            android:name=".finddifference.finddifference_stage3"
+            android:exported="false" />
+
+        <activity
+            android:name=".finddifference.finddifference_stage4"
+            android:exported="false" />
+
+
+
+    </application>
+
+</manifest>

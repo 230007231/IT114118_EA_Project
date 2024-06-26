@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".score_page"
+    android:background="@drawable/score_board">
+
+
+    <TextView
+        android:id="@+id/displayscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#E1FFFFFF"
+        android:fontFamily="@font/mouldycheeseregular_wymwg"
+        android:text="@string/total_score"
+        android:gravity="center"
+        android:textColor="#0B0B0B"
+        android:textSize="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.168" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#E1FFFFFF"
+        android:fontFamily="@font/mouldycheeseregular_wymwg"
+        android:gravity="center"
+        android:text="username"
+        android:textColor="#0B0B0B"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.677" />
+
+    <TextView
+        android:id="@+id/totalscore"
+        android:layout_width="154dp"
+        android:layout_height="134dp"
+        android:background="#E1FFFFFF"
+        android:fontFamily="@font/mouldycheeseregular_wymwg"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#0B0B0B"
+        android:textSize="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.345" />
+
+    <Button
+        android:id="@+id/home"
+        android:layout_width="95dp"
+        android:layout_height="48dp"
+        android:text="@string/home_page"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.281"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519" />
+
+    <Button
+        android:id="@+id/Select1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select page"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.692"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

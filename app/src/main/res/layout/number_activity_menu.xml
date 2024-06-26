@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".menu"
+    android:background="@drawable/mathgmaebackground2">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_weight="1"        >
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="195dp"
+            app:srcCompat="@drawable/math_icon"
+            tools:layout_editor_absoluteX="93dp"
+            tools:layout_editor_absoluteY="224dp" />
+
+        <ImageView
+            android:id="@+id/Start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/start"
+            tools:layout_editor_absoluteX="93dp"
+            tools:layout_editor_absoluteY="224dp"
+            android:gravity="center"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
