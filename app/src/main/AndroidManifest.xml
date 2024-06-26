@@ -51,6 +51,15 @@
             android:name=".record.Record"
             android:exported="false" />
         <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShareActivity"
+            android:exported="false" />
+        <activity
             android:name=".Menu"
             android:exported="true">
             <intent-filter>
