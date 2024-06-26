@@ -25,7 +25,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="總共有五個不之處"
+            android:text="總共有五個不之處1"
             android:textStyle="bold"
             android:textSize="20dp"
             android:layout_marginLeft="30dp"
