@@ -6,16 +6,35 @@
     android:background="#F0E7E7"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <Button
-        android:id="@+id/btnback"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:text="@string/Back"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:text="@string/LogIn"
         android:onClick="back"
         android:background="#44a6c6"
         android:textColor="@android:color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"/>
+    <Button
+        android:id="@+id/btnSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:text="@string/Setting"
+        android:onClick="back"
+        android:background="#44a6c6"
+        android:textColor="@android:color/white"/>
+</LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"

@@ -13,6 +13,7 @@ import com.example.elderbox.record.Record;
 
 public class Menu extends AppCompatActivity {
 
+    Button login, setting;
     Button game,record,ranking,logout;
 
     @Override
@@ -21,10 +22,30 @@ public class Menu extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu);
 
+        login = findViewById(R.id.btnLogin);
+        setting = findViewById(R.id.btnSetting);
+
         game = findViewById(R.id.btn4);
         record = findViewById(R.id.btn5);
         ranking = findViewById(R.id.btn6);
         logout = findViewById(R.id.btn7);
+
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Login.class);
+                startActivity(intent);
+            }
+        });
+
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Register.class);
+                startActivity(intent);
+            }
+        });
 
         game.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +74,10 @@ public class Menu extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Menu.this,First.class);
-                startActivity(intent);
+                finishAffinity(); // end all
             }
         });
+
     }
     public void back(View view) {
         Intent intent = new Intent(Menu.this, Login.class);

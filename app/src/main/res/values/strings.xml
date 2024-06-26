@@ -10,6 +10,7 @@
 
     <string name="LogIn">Log In</string>
     <string name="SignIn">Sign In</string>
+    <string name="Setting">Setting</string>
     <string name="Back">Back</string>
     <string name="record">Record</string>
     <string name="ranking">Ranking</string>

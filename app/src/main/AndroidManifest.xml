@@ -15,9 +15,6 @@
         android:theme="@style/Theme.PlaneShooter"
         tools:targetApi="31">
         <activity
-            android:name=".Signin"
-            android:exported="false" />
-        <activity
             android:name=".finddifference.Std"
             android:exported="false" />
         <activity
@@ -48,16 +45,13 @@
             android:name=".Register"
             android:exported="false" />
         <activity
-            android:name=".Menu"
-            android:exported="false" />
-        <activity
             android:name=".ranking.Ranking"
             android:exported="false" />
         <activity
             android:name=".record.Record"
             android:exported="false" />
         <activity
-            android:name=".First"
+            android:name=".Menu"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
