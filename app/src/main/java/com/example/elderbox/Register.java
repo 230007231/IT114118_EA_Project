@@ -32,7 +32,7 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
+        setContentView(R.layout.activity_register);
 
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
@@ -94,7 +94,7 @@ public class Register extends AppCompatActivity {
     }
 
     public void back(View view) {
-        Intent intent = new Intent(Register.this, First.class);
+        Intent intent = new Intent(Register.this, Login.class);
         startActivity(intent);
         finish();
     }
