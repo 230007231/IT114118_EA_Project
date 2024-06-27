@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.example.elderbox.R;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -22,6 +25,8 @@ public class GameOver extends Activity {
 
     TextView tvName, tvScore, tvPersonalBest;
 
+    int pastScore = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,24 +35,69 @@ public class GameOver extends Activity {
         int score1 = getIntent().getExtras().getInt("score");
 
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        int scoreSP = pref.getInt("scoreSP", 0);
+
         String playerName = pref.getString("name", "");
         SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("score1", score1);
-        if(score1 > scoreSP){
-            scoreSP = score1;
-            editor.putInt("scoreSP", scoreSP);
-            editor.apply();
-        }
+
         tvName = findViewById(R.id.tvName);
         tvScore = findViewById(R.id.tvScore);
         tvPersonalBest = findViewById(R.id.tvPersonalBest);
+
         tvName.setText(playerName);
         tvScore.setText(String.valueOf(score1));
-        tvPersonalBest.setText(String.valueOf(scoreSP));
 
-        int finalScoreSP = scoreSP;
-        Thread thread1 = new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://10.0.2.2/login/GetData2.php");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setDoOutput(true);
+                    connection.setDoInput(true);
+                    connection.setUseCaches(false);
+                    connection.connect();
+                    DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8"));
+                    outputStream.writeBytes(stringBuilder.toString());
+                    outputStream.flush();
+                    outputStream.close();
+
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        InputStream inputStream = connection.getInputStream();
+                        BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
+                        String line;
+                        while ((line = bufReader.readLine()) != null) {
+                            JSONArray dataJson = new JSONArray(line);
+                            int i = dataJson.length() - 1;
+                            JSONObject test = dataJson.getJSONObject(i);
+                            pastScore = test.getInt("score1");
+                            if (score1 > pastScore) {
+                                pastScore = score1;
+                                updateScoreInDatabase(playerName, pastScore);
+                            }
+                        }
+                        inputStream.close();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tvPersonalBest.setText(String.valueOf(pastScore));
+                            }
+                        });
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private void updateScoreInDatabase(String playerName, int score) {
+        Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
                     URL url = new URL("http://10.0.2.2/login/SendData2.php");
@@ -61,7 +111,7 @@ public class GameOver extends Activity {
                     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8")).append("&");
-                    stringBuilder.append("score1=").append(finalScoreSP);
+                    stringBuilder.append("score1=").append(score);
                     outputStream.writeBytes(stringBuilder.toString());
                     outputStream.flush();
                     outputStream.close();
@@ -89,7 +139,7 @@ public class GameOver extends Activity {
                 }
             }
         });
-        thread1.start();
+        thread.start();
     }
 
     public void restart(View view){

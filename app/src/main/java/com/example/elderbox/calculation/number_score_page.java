@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.elderbox.R;
 import com.example.elderbox.Selectpage;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -29,6 +32,8 @@ public class number_score_page extends AppCompatActivity {
 
     int score3;
 
+    private int pastScore3 = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,84 +49,18 @@ public class number_score_page extends AppCompatActivity {
         }
 
 
+        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+        String playerName = pref.getString("name", ""); // if no, set blank as result
+        SharedPreferences.Editor editor = pref.edit();
+
+
+
+
         TextView totalscore = (TextView) findViewById(R.id.totalscore);
         totalscore.setText("分數: " + String.valueOf(score3));
 
         Button home = (Button) findViewById(R.id.home);
-
-
-
-
-
-        SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        int scoreSP3 = pref.getInt("scoreSP3", 0);
-        String playerName = pref.getString("name", ""); // if no, set blank as result
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("score3", score3);
-        if(score3 > scoreSP3){
-            scoreSP3 = score3;
-            editor.putInt("scoreSP3", scoreSP3);
-            editor.apply();
-        }
-
-
-
-
-
-
-        int finalScoreSP = scoreSP3;
-        Thread thread1 = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    URL url = new URL("http://10.0.2.2/login/SendData1.php");
-                    // 開始宣告 HTTP 連線需要的物件，這邊通常都是一綑的
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setDoOutput(true);
-                    connection.setDoInput(true);
-                    connection.setUseCaches(false);
-                    connection.connect();
-
-                    DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8")).append("&");
-                    stringBuilder.append("score3=").append(finalScoreSP).append("&");
-                    outputStream.writeBytes(stringBuilder.toString());
-                    outputStream.flush();
-                    outputStream.close();
-
-                    // 在這裡可以處理服務器的響應（可選）
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        // 读取服务器的响应数据
-                        InputStream inputStream = connection.getInputStream();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                        String line;
-                        StringBuilder response = new StringBuilder();
-                        while ((line = reader.readLine()) != null) {
-                            response.append(line);
-                        }
-                        reader.close();
-                        inputStream.close();
-
-                        // 在这里可以处理服务器的响应数据
-                        String serverResponse = response.toString();
-                        // 根据需要进行处理，例如更新UI等
-                        // ...
-
-                    }
-
-                } catch (ProtocolException e) {
-                    throw new RuntimeException(e);
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-
 
 
 
@@ -142,7 +81,102 @@ public class number_score_page extends AppCompatActivity {
                 startActivity(new Intent(number_score_page.this, Selectpage.class));
             }
         });
-        thread1.start();
 
+
+
+
+
+
+
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://10.0.2.2/login/GetData1.php");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setDoOutput(true);
+                    connection.setDoInput(true);
+                    connection.setUseCaches(false);
+                    connection.connect();
+                    DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8"));
+                    outputStream.writeBytes(stringBuilder.toString());
+                    outputStream.flush();
+                    outputStream.close();
+
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        InputStream inputStream = connection.getInputStream();
+                        BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
+                        String line;
+                        while ((line = bufReader.readLine()) != null) {
+                            JSONArray dataJson = new JSONArray(line);
+                            int i = dataJson.length() - 1;
+                            JSONObject test = dataJson.getJSONObject(i);
+                            pastScore3 = test.getInt("score3");
+                            if (score3 > pastScore3) {
+                                pastScore3 = score3;
+                                updateScoreInDatabase(playerName, pastScore3);
+                            }
+                        }
+                        inputStream.close();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private void updateScoreInDatabase(String playerName, int score) {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    URL url = new URL("http://10.0.2.2/login/SendData1.php");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setDoOutput(true);
+                    connection.setDoInput(true);
+                    connection.setUseCaches(false);
+                    connection.connect();
+
+                    DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8")).append("&");
+                    stringBuilder.append("score3=").append(score);
+                    outputStream.writeBytes(stringBuilder.toString());
+                    outputStream.flush();
+                    outputStream.close();
+
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        InputStream inputStream = connection.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                        StringBuilder response = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            response.append(line);
+                        }
+                        reader.close();
+                        inputStream.close();
+
+                        // Handle server response if needed
+                        String serverResponse = response.toString();
+                        // Update UI or log the response if necessary
+                    } else {
+                        // Handle non-OK response
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 }
+

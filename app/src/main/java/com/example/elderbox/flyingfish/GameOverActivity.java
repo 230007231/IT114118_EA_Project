@@ -12,21 +12,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.elderbox.R;
 import com.example.elderbox.Selectpage;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 
 public class GameOverActivity extends AppCompatActivity {
 
     private Button playAgainBtn, exitBtn;
-    TextView tvName, tvScore, tvPersonalBest;
+    private TextView tvName, tvScore, tvPersonalBest;
+
+    private int pastScore2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +39,8 @@ public class GameOverActivity extends AppCompatActivity {
         int score2 = getIntent().getExtras().getInt("score");
 
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        int scoreSP2 = pref.getInt("scoreSP2", 0);
         String playerName = pref.getString("name", ""); // if no, set blank as result
         SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("score2", score2);
-        if(score2 > scoreSP2){
-            scoreSP2 = score2;
-            editor.putInt("scoreSP2", scoreSP2);
-            editor.apply();
-        }
 
         playAgainBtn = findViewById(R.id.play_again_button_id);
         exitBtn = findViewById(R.id.button2);
@@ -53,17 +49,85 @@ public class GameOverActivity extends AppCompatActivity {
         tvScore = findViewById(R.id.tvScore);
         tvPersonalBest = findViewById(R.id.tvPersonalBest);
 
-        tvName.setText(""+playerName);
-        tvScore.setText(""+score2);
-        tvPersonalBest.setText(""+scoreSP2);
+        tvName.setText(playerName);
+        tvScore.setText(String.valueOf(score2));
 
 
-        int finalScoreSP = scoreSP2;
-        Thread thread1 = new Thread(new Runnable() {
+        playAgainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameOverActivity.this, FishMainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameOverActivity.this, Selectpage.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://10.0.2.2/login/GetData3.php");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setDoOutput(true);
+                    connection.setDoInput(true);
+                    connection.setUseCaches(false);
+                    connection.connect();
+                    DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8"));
+                    outputStream.writeBytes(stringBuilder.toString());
+                    outputStream.flush();
+                    outputStream.close();
+
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        InputStream inputStream = connection.getInputStream();
+                        BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
+                        String line;
+                        while ((line = bufReader.readLine()) != null) {
+                            JSONArray dataJson = new JSONArray(line);
+                            int i = dataJson.length() - 1;
+                            JSONObject test = dataJson.getJSONObject(i);
+                            pastScore2 = test.getInt("score2");
+                            if (score2 > pastScore2) {
+                                pastScore2 = score2;
+                                updateScoreInDatabase(playerName, pastScore2);
+                            }
+                        }
+                        inputStream.close();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tvPersonalBest.setText(String.valueOf(pastScore2));
+                            }
+                        });
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private void updateScoreInDatabase(String playerName, int score) {
+        Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
                     URL url = new URL("http://10.0.2.2/login/SendData3.php");
-                    // 開始宣告 HTTP 連線需要的物件，這邊通常都是一綑的
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     connection.setDoOutput(true);
@@ -74,62 +138,34 @@ public class GameOverActivity extends AppCompatActivity {
                     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8")).append("&");
-                    stringBuilder.append("score2=").append(finalScoreSP).append("&");
+                    stringBuilder.append("score2=").append(score);
                     outputStream.writeBytes(stringBuilder.toString());
                     outputStream.flush();
                     outputStream.close();
 
-                    // 在這裡可以處理服務器的響應（可選）
                     int responseCode = connection.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
-                        // 读取服务器的响应数据
                         InputStream inputStream = connection.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                        String line;
                         StringBuilder response = new StringBuilder();
+                        String line;
                         while ((line = reader.readLine()) != null) {
                             response.append(line);
                         }
                         reader.close();
                         inputStream.close();
 
-                        // 在这里可以处理服务器的响应数据
+                        // Handle server response if needed
                         String serverResponse = response.toString();
-                        // 根据需要进行处理，例如更新UI等
-                        // ...
-
+                        // Update UI or log the response if necessary
+                    } else {
+                        // Handle non-OK response
                     }
-
-                } catch (ProtocolException e) {
-                    throw new RuntimeException(e);
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         });
-
-
-
-
-
-
-        playAgainBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FishMainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-            exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Selectpage.class);
-                startActivity(intent);
-            }
-        });
-        thread1.start();
+        thread.start();
     }
 }
