@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">ElderBox</string>
+    <string name="start_game">Start Game</string>
+
+    <string name="restart">Restart</string>
+    <string name="exit">Exit</string>
+
+    <string name="score">Score: </string>
+    <string name="personal_best">Personal best: </string>
+
+    <string name="LogIn">Log In</string>
+    <string name="SignIn">Sign In</string>
+    <string name="Setting">Setting</string>
+    <string name="Back">Back</string>
+    <string name="record">Record</string>
+    <string name="ranking">Ranking</string>
+
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="email">Email:</string>
+    <string name="Retype">Retype password</string>
+    <string name="usernamehint">Type your username</string>
+    <string name="passwordhint">Type your password</string>
+    <string name="ps">Please select</string>
+    <string name="game">Game</string>
+    <string name="game1">Game 1: Plane Shooter</string>
+    <string name="game2">Game 2: Flying Fish</string>
+    <string name="game3">Game 3: Numbers</string>
+    <string name="game4">Game 4: Spot Difference</string>
+    <string name="LogOut">Log Out</string>
+
+    <string name="Plane">Plane Shooter</string>
+    <string name="Fish">Flying Fish</string>
+    <string name="num">Numbers</string>
+    <string name="Std">Spot Difference</string>
+
+    <string name="game_over">Game Over</string>
+    <string name="play_again">Play Again</string>
+
+    <string name="flying_fish">The Flying Fish</string>
+    <string name="Welcome">Welcome!</string>
+
+    <string name="Total_Score">Total Score</string>
+    <string name="home">Home</string>
+    <string name="select_page">Select Page</string>
+    <string name="spot_the_difference_game">Spot the difference game</string>
+    <string name="Total_Score2">Total Score</string>
+    <string name="home2">Home</string>
+    <string name="select_page2">Select Page</string>
+    <string name="next">Next!</string>
+    <string name="content">Five differences(First level)</string>
+    <string name="Score">Score:</string>
+    <string name="next3">Next!</string>
+    <string name="next4">Next!</string>
+    <string name="next2">Next!</string>
+    <string name="content2">Five differences(Level two)</string>
+    <string name="score2">Score:</string>
+    <string name="score3">Score:</string>
+    <string name="score4">Score:</string>
+    <string name="content4">Five differences(Level four)</string>
+    <string name="content3">Five differences(Level three)</string>
+    <string name="message">You haven\'t found all the differences yet. Only when you find all the differences can you enter the next level! OVO</string>
+    <string name="hint">Hint</string>
+    <string name="score5">Score:</string>
+    <string name="re_enter_password">Re-enter Password</string>
+    <string name="register">Register</string>
+    <string name="emailhint">Type your email</string>
+    <string name="registertext">Don\'t have an Account?\nRegister here.</string>
+    <string name="logintext">Already Registered?\nLogin here.</string>
+</resources>
