@@ -6,17 +6,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 public class AboutActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageView menu;
     LinearLayout home, settings, share, about, logout;
+    TextView aboutContent;
 
 
     @Override
@@ -31,6 +40,41 @@ public class AboutActivity extends AppCompatActivity {
         share = findViewById(R.id.share);
         about = findViewById(R.id.about);
         logout= findViewById(R.id.logout);
+
+        aboutContent = findViewById(R.id.aboutContent);
+
+
+
+
+        // Read JSON data from assets
+        String jsonContent = readJsonFromAssets();
+
+        if (jsonContent != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(jsonContent);
+                JSONArray groupmatesArray = jsonObject.getJSONArray("Groupmates");
+
+                // Extract groupmates' names and descriptions
+                StringBuilder groupmatesInfo = new StringBuilder();
+                for (int i = 0; i < groupmatesArray.length(); i++) {
+                    JSONObject groupmate = groupmatesArray.getJSONObject(i);
+                    String name = groupmate.getString("name");
+                    String description = groupmate.getString("description");
+                    groupmatesInfo.append(name).append(": ").append(description).append("\n");
+                }
+
+                // Set the extracted data to the TextView
+                aboutContent.setText(groupmatesInfo.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+
+
+
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,4 +140,19 @@ public class AboutActivity extends AppCompatActivity {
         super.onPause();
         closeDrawer(drawerLayout);
     }
+
+    private String readJsonFromAssets() {
+        try {
+            InputStream inputStream = getAssets().open("about.json");
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            return new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
