@@ -20,22 +20,26 @@ public class finddifference_menu extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.finddifference_activity_menu);
 
-        ImageView playbutton = (ImageView) findViewById(R.id.play);
+        // Initialize the play button
+        ImageView playButton = (ImageView) findViewById(R.id.play);
 
-        playbutton.setOnClickListener(new View.OnClickListener() {
+        // Set an onClickListener for the play button
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Start the activity for finddifference_stage1 when the play button is clicked
                 startActivity(new Intent(finddifference_menu.this, finddifference_stage1.class));
             }
         });
-
-
     }
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
+        // Call the superclass method to perform any necessary setup
         super.onResume();
+
+        // Play the specified sound using the Music class
         Music.play(this, R.raw.opensound2);
     }
+
 }

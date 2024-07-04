@@ -31,7 +31,6 @@ import java.net.URLEncoder;
 public class number_score_page extends AppCompatActivity {
 
     int score3;
-
     private int pastScore3 = 0;
 
     @Override
@@ -40,32 +39,24 @@ public class number_score_page extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.number_activity_score_page);
 
-
-        // In NextActivity.java
+        // Retrieving the score value passed from the previous activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             int receivedScore = extras.getInt("EXTRA_SCORE");
-            score3=receivedScore;
+            score3 = receivedScore;
         }
 
-
+        // Retrieving player name from SharedPreferences
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-
-        String playerName = pref.getString("name", ""); // if no, set blank as result
+        String playerName = pref.getString("name", "");
         SharedPreferences.Editor editor = pref.edit();
 
-
-
-
+        // Displaying the score on the TextView
         TextView totalscore = (TextView) findViewById(R.id.totalscore);
         totalscore.setText("分數: " + String.valueOf(score3));
 
+        // Setting click listeners for home and select buttons
         Button home = (Button) findViewById(R.id.home);
-
-
-
-
-
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +65,6 @@ public class number_score_page extends AppCompatActivity {
         });
 
         Button select = (Button) findViewById(R.id.select);
-
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,17 +72,12 @@ public class number_score_page extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
+        // Creating a new thread to handle network operations
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    // Establishing connection to the PHP script
                     URL url = new URL("http://10.0.2.2/login/GetData1.php");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
@@ -100,6 +85,8 @@ public class number_score_page extends AppCompatActivity {
                     connection.setDoInput(true);
                     connection.setUseCaches(false);
                     connection.connect();
+
+                    // Sending player name to the PHP script
                     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8"));
@@ -107,24 +94,26 @@ public class number_score_page extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
+                    // Checking the response code from the server
                     int responseCode = connection.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
                         InputStream inputStream = connection.getInputStream();
                         BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
                         String line;
                         while ((line = bufReader.readLine()) != null) {
+                            // Parsing the server response as JSON
                             JSONArray dataJson = new JSONArray(line);
                             int i = dataJson.length() - 1;
                             JSONObject test = dataJson.getJSONObject(i);
                             pastScore3 = test.getInt("score3");
                             if (score3 > pastScore3) {
+                                // Updating the past score if the current score is higher
                                 pastScore3 = score3;
                                 updateScoreInDatabase(playerName, pastScore3);
                             }
                         }
                         inputStream.close();
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -137,6 +126,7 @@ public class number_score_page extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
+                    // Establishing connection to the PHP script
                     URL url = new URL("http://10.0.2.2/login/SendData1.php");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
@@ -145,6 +135,7 @@ public class number_score_page extends AppCompatActivity {
                     connection.setUseCaches(false);
                     connection.connect();
 
+                    // Sending player name and score to the PHP script
                     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8")).append("&");
@@ -153,8 +144,10 @@ public class number_score_page extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
+                    // Checking the response code from the server
                     int responseCode = connection.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Handling the server response
                         InputStream inputStream = connection.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                         StringBuilder response = new StringBuilder();
@@ -164,8 +157,6 @@ public class number_score_page extends AppCompatActivity {
                         }
                         reader.close();
                         inputStream.close();
-
-                        // Handle server response if needed
                         String serverResponse = response.toString();
                         // Update UI or log the response if necessary
                     } else {

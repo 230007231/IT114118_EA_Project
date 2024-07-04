@@ -8,9 +8,7 @@ import android.widget.Button;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.elderbox.calculation.number_main;
 import com.example.elderbox.calculation.number_menu;
-import com.example.elderbox.finddifference.Std;
 import com.example.elderbox.finddifference.finddifference_menu;
 import com.example.elderbox.flyingfish.SplashActivity;
 import com.example.elderbox.planeshooter.MainActivity;

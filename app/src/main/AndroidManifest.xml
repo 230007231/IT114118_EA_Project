@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlaneShooter"
         tools:targetApi="31">
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity
             android:name=".finddifference.Std"
             android:exported="false" />
@@ -112,7 +113,12 @@
 
         <activity
             android:name=".aichatbox.ai_MainActivity"
-            android:exported="false" />
+            android:exported="true" />
+
+        <activity
+            android:name=".aichatbox.MainActivity"
+            android:exported="true" />
+
 
     </application>
 

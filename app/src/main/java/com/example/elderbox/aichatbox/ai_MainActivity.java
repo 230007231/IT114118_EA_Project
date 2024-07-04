@@ -1,5 +1,9 @@
 package com.example.elderbox.aichatbox;
 
+/**
+ * This class represents an activity for the ElderBox AI chatbox.
+ * It handles user interactions, such as sending messages and displaying chat history.
+ */
 
 import android.os.Bundle;
 import android.view.View;
@@ -103,8 +107,6 @@ public class ai_MainActivity extends AppCompatActivity {
         messageRVAdapter.notifyDataSetChanged();
 
         // url for our brain
-        // make sure to add mshape for uid.
-        // make sure to add your url.
         String url = "http://api.brainshop.ai/get?bid=182311&key=Td9dYE4IgN4MROdT&uid=[uid]&msg=" + userMsg;
 
         // creating a variable for our request queue.

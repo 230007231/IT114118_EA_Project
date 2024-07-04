@@ -14,35 +14,28 @@ import com.example.elderbox.R;
 
 public class number_menu extends AppCompatActivity {
 
-    ImageView Start ;
+    ImageView Start;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.number_activity_menu);
-
-       Start = (ImageView) findViewById(R.id.Start);
-
-        Start.setOnClickListener(new View.OnClickListener(){
+        Start = (ImageView) findViewById(R.id.Start);
+        Start.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
+                // When the Start ImageView is clicked
                 Intent intent = new Intent(number_menu.this, number_MainActivity.class);
-                startActivity(intent);
+                startActivity(intent); // Starting the number_MainActivity
             }
         });
-
-
-
     }
-
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
         Music.play(this, R.raw.opensound2);
     }
-
 
 }
