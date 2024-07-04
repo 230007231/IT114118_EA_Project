@@ -7,12 +7,16 @@ import android.graphics.BitmapFactory;
 import com.example.elderbox.R;
 
 public class Explosion {
-
+    // Declare an array of Bitmaps to store explosion frames
     Bitmap explosion[] = new Bitmap[9];
-    int explosionFrame=0;
+    // Initialize explosion frame index
+    int explosionFrame = 0;
+    // Declare explosion coordinates
     int explosionX, explosionY;
 
-    public Explosion(Context context){
+    // Constructor for the Explosion class
+    public Explosion(Context context) {
+        // Load explosion frames from resources
         explosion[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion0);
         explosion[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion1);
         explosion[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion2);
@@ -23,13 +27,20 @@ public class Explosion {
         explosion[7] = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion7);
         explosion[8] = BitmapFactory.decodeResource(context.getResources(), R.drawable.explosion8);
     }
-    public Bitmap getExplosion(int explosionFrame){
+
+    // Get the Bitmap for the specified explosion frame
+    public Bitmap getExplosion(int explosionFrame) {
         return explosion[explosionFrame];
     }
-    public int getExplosionWidth(){
+
+    // Get the width of the explosion frame
+    public int getExplosionWidth() {
         return explosion[0].getWidth();
     }
-    public int getExplosionHeight(){
+
+    // Get the height of the explosion frame
+    public int getExplosionHeight() {
         return explosion[0].getHeight();
     }
 }
+

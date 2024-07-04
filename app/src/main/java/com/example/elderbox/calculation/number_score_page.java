@@ -30,42 +30,36 @@ import java.net.URLEncoder;
 
 public class number_score_page extends AppCompatActivity {
 
-    int score3;
+    int score3; // Declare an integer variable to store the score.
 
-    private int pastScore3 = 0;
+    private int pastScore3 = 0; // Declare another integer variable for past score.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.number_activity_score_page);
+        EdgeToEdge.enable(this); // Enable edge-to-edge mode for the activity.
+        setContentView(R.layout.number_activity_score_page); // Set the layout for this activity.
 
-
-        // In NextActivity.java
+        // Get extras from the intent (if any).
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             int receivedScore = extras.getInt("EXTRA_SCORE");
-            score3=receivedScore;
+            score3 = receivedScore; // Assign the received score to the variable.
         }
 
-
+        // Access shared preferences.
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
-        String playerName = pref.getString("name", ""); // if no, set blank as result
-        SharedPreferences.Editor editor = pref.edit();
+        // Get the player name from preferences (default to blank if not found).
+        String playerName = pref.getString("name", "");
+        SharedPreferences.Editor editor = pref.edit(); // Get an editor for preferences.
 
-
-
-
-        TextView totalscore = (TextView) findViewById(R.id.totalscore);
+        // Set the total score text view.
+        TextView totalscore = findViewById(R.id.totalscore);
         totalscore.setText("分數: " + String.valueOf(score3));
 
-        Button home = (Button) findViewById(R.id.home);
-
-
-
-
-
+        // Set an onClickListener for the home button.
+        Button home = findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,8 +67,8 @@ public class number_score_page extends AppCompatActivity {
             }
         });
 
-        Button select = (Button) findViewById(R.id.select);
-
+        // Set an onClickListener for the select button.
+        Button select = findViewById(R.id.select);
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,24 +76,22 @@ public class number_score_page extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    // Create a URL object for the server endpoint
                     URL url = new URL("http://10.0.2.2/login/GetData1.php");
+
+                    // Open an HTTP connection
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     connection.setDoOutput(true);
                     connection.setDoInput(true);
                     connection.setUseCaches(false);
                     connection.connect();
+
+                    // Set up an output stream to send data to the server
                     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8"));
@@ -107,24 +99,29 @@ public class number_score_page extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
+                    // Get the HTTP response code
                     int responseCode = connection.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Read the response data from the server
                         InputStream inputStream = connection.getInputStream();
                         BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
                         String line;
                         while ((line = bufReader.readLine()) != null) {
+                            // Parse the JSON data received from the server
                             JSONArray dataJson = new JSONArray(line);
                             int i = dataJson.length() - 1;
                             JSONObject test = dataJson.getJSONObject(i);
                             pastScore3 = test.getInt("score3");
+
+                            // Compare the current score with the previous high score
                             if (score3 > pastScore3) {
                                 pastScore3 = score3;
+                                // Update the high score in the database
                                 updateScoreInDatabase(playerName, pastScore3);
                             }
                         }
                         inputStream.close();
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -134,9 +131,11 @@ public class number_score_page extends AppCompatActivity {
     }
 
     private void updateScoreInDatabase(String playerName, int score) {
+        // Create a new thread to perform the network operation
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
+                    // Define the URL for the server
                     URL url = new URL("http://10.0.2.2/login/SendData1.php");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
@@ -145,6 +144,7 @@ public class number_score_page extends AppCompatActivity {
                     connection.setUseCaches(false);
                     connection.connect();
 
+                    // Prepare the data to be sent
                     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8")).append("&");
@@ -153,8 +153,10 @@ public class number_score_page extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
+                    // Get the response code from the server
                     int responseCode = connection.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Read the server response
                         InputStream inputStream = connection.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                         StringBuilder response = new StringBuilder();
@@ -179,4 +181,3 @@ public class number_score_page extends AppCompatActivity {
         thread.start();
     }
 }
-

@@ -11,13 +11,17 @@ import com.example.elderbox.R;
 
 public class UsersAdapter extends ArrayAdapter<Users> {
 
+    // Context for the adapter
     private Context context;
+    // Layout resource ID for the row
     private int layoutResourceID;
+    // Array of Users data
     private Users usersData[] = null;
 
     public UsersAdapter(Context context, int layoutResourceID, Users[] usersData) {
         super(context, layoutResourceID, usersData);
 
+        // Initialize context, layoutResourceID, and usersData
         this.context = context;
         this.layoutResourceID = layoutResourceID;
         this.usersData = usersData;
@@ -29,9 +33,11 @@ public class UsersAdapter extends ArrayAdapter<Users> {
         UsersHolder usersHolder;
 
         if (row == null) {
+            // Inflate the row layout if it's null
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(layoutResourceID, parent, false);
 
+            // Create a new UsersHolder and find views
             usersHolder = new UsersHolder();
             usersHolder.name = row.findViewById(R.id.playername);
             usersHolder.score1 = row.findViewById(R.id.score1);
@@ -40,13 +46,17 @@ public class UsersAdapter extends ArrayAdapter<Users> {
             usersHolder.score4 = row.findViewById(R.id.score4);
             usersHolder.scoreTotal = row.findViewById(R.id.tScore);
 
+            // Set the tag for the row
             row.setTag(usersHolder);
         } else {
+            // Reuse existing UsersHolder
             usersHolder = (UsersHolder) row.getTag();
         }
 
+        // Get the Users object at the current position
         Users users = usersData[position];
 
+        // Set text for each TextView
         usersHolder.name.setText("   Name: " + users.name);
         usersHolder.score1.setText("   Score 1: " + users.score1);
         usersHolder.score2.setText("   Score 2: " + users.score2);
@@ -58,6 +68,7 @@ public class UsersAdapter extends ArrayAdapter<Users> {
         return row;
     }
 
+    // Static inner class to hold views
     private static class UsersHolder {
         TextView name;
         TextView score1;

@@ -26,9 +26,11 @@ import java.net.URLEncoder;
 
 public class GameOverActivity extends AppCompatActivity {
 
+    // Declare buttons and text views
     private Button playAgainBtn, exitBtn;
     private TextView tvName, tvScore, tvPersonalBest;
 
+    // Initialize a variable to store past score
     private int pastScore2 = 0;
 
     @Override
@@ -36,23 +38,26 @@ public class GameOverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fish_game_over);
 
+        // Get the score from the intent extras
         int score2 = getIntent().getExtras().getInt("score");
 
+        // Retrieve player name from shared preferences
         SharedPreferences pref = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        String playerName = pref.getString("name", ""); // if no, set blank as result
+        String playerName = pref.getString("name", ""); // If no name, set blank as result
         SharedPreferences.Editor editor = pref.edit();
 
+        // Initialize UI elements
         playAgainBtn = findViewById(R.id.play_again_button_id);
         exitBtn = findViewById(R.id.button2);
-
         tvName = findViewById(R.id.tvName);
         tvScore = findViewById(R.id.tvScore);
         tvPersonalBest = findViewById(R.id.tvPersonalBest);
 
+        // Set player name and score on text views
         tvName.setText(playerName);
         tvScore.setText(String.valueOf(score2));
 
-
+        // Set click listener for play again button
         playAgainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +67,7 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
-
+        // Set click listener for exit button
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,18 +77,22 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
-
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    // Create a URL object for the server endpoint
                     URL url = new URL("http://10.0.2.2/login/GetData3.php");
+
+                    // Open an HTTP connection
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     connection.setDoOutput(true);
                     connection.setDoInput(true);
                     connection.setUseCaches(false);
                     connection.connect();
+
+                    // Set up an output stream to write data to the server
                     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8"));
@@ -91,22 +100,29 @@ public class GameOverActivity extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
+                    // Get the HTTP response code
                     int responseCode = connection.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Read data from the server
                         InputStream inputStream = connection.getInputStream();
                         BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"), 8);
                         String line;
                         while ((line = bufReader.readLine()) != null) {
+                            // Parse the JSON data
                             JSONArray dataJson = new JSONArray(line);
                             int i = dataJson.length() - 1;
                             JSONObject test = dataJson.getJSONObject(i);
                             pastScore2 = test.getInt("score2");
+
+                            // Update the score if it's higher than the previous best
                             if (score2 > pastScore2) {
                                 pastScore2 = score2;
                                 updateScoreInDatabase(playerName, pastScore2);
                             }
                         }
                         inputStream.close();
+
+                        // Update the UI on the main thread
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -114,7 +130,6 @@ public class GameOverActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -124,9 +139,11 @@ public class GameOverActivity extends AppCompatActivity {
     }
 
     private void updateScoreInDatabase(String playerName, int score) {
+        // Create a new thread to perform the network operation
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
+                    // Define the URL for the server
                     URL url = new URL("http://10.0.2.2/login/SendData3.php");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
@@ -135,6 +152,7 @@ public class GameOverActivity extends AppCompatActivity {
                     connection.setUseCaches(false);
                     connection.connect();
 
+                    // Prepare the data to be sent
                     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append("playername=").append(URLEncoder.encode(playerName, "UTF-8")).append("&");
@@ -143,8 +161,10 @@ public class GameOverActivity extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
+                    // Get the server response code
                     int responseCode = connection.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Read the response from the server
                         InputStream inputStream = connection.getInputStream();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                         StringBuilder response = new StringBuilder();

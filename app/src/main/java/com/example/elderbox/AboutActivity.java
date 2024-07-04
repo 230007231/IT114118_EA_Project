@@ -70,64 +70,68 @@ public class AboutActivity extends AppCompatActivity {
             }
         }
 
-
-
-
-
-
-
+        // Set an OnClickListener for the "menu" button
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDrawer(drawerLayout);
+                openDrawer(drawerLayout); // Call the openDrawer method
             }
         });
 
+        // Set an OnClickListener for the "home" button
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(AboutActivity.this, Menu.class);
+                redirectActivity(AboutActivity.this, Menu.class); // Redirect to the Menu activity
             }
         });
 
+        // Set an OnClickListener for the "settings" button
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(AboutActivity.this, SettingsActivity.class);
+                redirectActivity(AboutActivity.this, SettingsActivity.class);// Redirect to the Settings activity
             }
         });
 
+        // Set an OnClickListener for the "share" button
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(AboutActivity.this, ShareActivity.class);
+                redirectActivity(AboutActivity.this, ShareActivity.class);// Redirect to the Share activity
             }
         });
 
+        // Set an OnClickListener for the "about" button
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recreate();
+                recreate();// Recreate the current activity
             }
         });
 
+        // Set an OnClickListener for the "logout" button
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Show a toast message
                 Toast.makeText(AboutActivity.this,"Logout",Toast.LENGTH_SHORT).show();
             }
         });
     }
+    // Method to open the drawer
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
+    // Method to close the drawer
     public static void closeDrawer(DrawerLayout drawerLayout){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
 
+    // Method to redirect to another activity
     public static void redirectActivity(Activity activity, Class secondActivity){
         Intent intent = new Intent(activity, secondActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -135,12 +139,14 @@ public class AboutActivity extends AppCompatActivity {
         activity.finish();
     }
 
+    // onPause method to close the drawer when the activity is paused
     @Override
     protected void onPause(){
         super.onPause();
         closeDrawer(drawerLayout);
     }
 
+    // Read JSON data from assets folder
     private String readJsonFromAssets() {
         try {
             InputStream inputStream = getAssets().open("about.json");

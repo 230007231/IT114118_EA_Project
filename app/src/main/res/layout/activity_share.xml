@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ShareActivity">
 
+    <com.example.elderbox.drawcomment_MyView
+        android:id="@+id/myDrawingArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/toolbar"/>
+        <include layout="@layout/toolbar" />
+
+        <Button
+            android:id="@+id/saveimgbtn"
+            android:layout_width="91dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/black"
+            android:text="Save Image" />
+
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            app:strokeColor="#2FC3BE" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Share"
-            android:textSize="36sp"
-            android:layout_marginTop="400dp"
             android:layout_gravity="center"
-            android:textColor="@color/lavender"/>
+            android:layout_marginTop="200dp"
+            android:text="Draw your comment!"
+            android:textColor="@color/lavender"
+            android:textSize="36sp" />
+
 
     </LinearLayout>
 

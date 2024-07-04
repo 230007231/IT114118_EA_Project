@@ -15,14 +15,13 @@ public class ScoresAdapter extends ArrayAdapter<Scores> {
     private int layoutResourceID;
     private Scores scoresData[] = null;
 
-
+    // Constructor
     public ScoresAdapter(Context context, int layoutResourceID, Scores[] scoresData) {
         super(context, layoutResourceID, scoresData);
 
         this.context = context;
         this.layoutResourceID = layoutResourceID;
         this.scoresData = scoresData;
-
     }
 
     @Override
@@ -32,9 +31,9 @@ public class ScoresAdapter extends ArrayAdapter<Scores> {
         ScoresHolder scoresHolder = null;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // Step 1: initialize place holder
-        if(row == null) {
-            row = inflater.inflate(layoutResourceID,parent,false);
+        // Step 1: Initialize placeholder view
+        if (row == null) {
+            row = inflater.inflate(layoutResourceID, parent, false);
 
             scoresHolder = new ScoresHolder();
             scoresHolder.playername = (TextView) row.findViewById(R.id.playername);
@@ -50,7 +49,7 @@ public class ScoresAdapter extends ArrayAdapter<Scores> {
             scoresHolder = (ScoresHolder) row.getTag();
         }
 
-        // Step 2: Place Data in place holder
+        // Step 2: Place data in the placeholder
         Scores scores = scoresData[position];
 
         scoresHolder.playername.setText(" " + scores.playername);
@@ -65,16 +64,11 @@ public class ScoresAdapter extends ArrayAdapter<Scores> {
     }
 
     private class ScoresHolder {
-        TextView id;
-        TextView playername;
-        TextView playerpw;
-        TextView score1;
-        TextView score2;
-        TextView score3;
-        TextView score4;
-
-        TextView scoreTotal;
-
+        TextView playername; // Placeholder for player name
+        TextView score1; // Placeholder for score 1
+        TextView score2; // Placeholder for score 2
+        TextView score3; // Placeholder for score 3
+        TextView score4; // Placeholder for score 4
+        TextView scoreTotal; // Placeholder for total score
     }
-
 }

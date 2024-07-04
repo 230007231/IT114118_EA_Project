@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class Ranking extends AppCompatActivity {
 
-    //URL to get contacts JSON
+    // URL to get contacts JSON
     private static String url = "http://10.0.2.2/login/getScores_json.php";
     private ListView lv;
     private ProgressDialog pd;
@@ -38,45 +38,48 @@ public class Ranking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
+        // Initialize the ListView
         lv = findViewById(R.id.list);
 
+        // Execute the JsonTask to fetch data
         new JsonTask().execute(url);
     }
 
     private class JsonTask extends AsyncTask<String, String, String> {
 
+        @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
+            // Show a progress dialog
             pd = new ProgressDialog(Ranking.this);
             pd.setMessage("Please wait");
             pd.setCancelable(false);
             pd.show();
         }
 
+        @Override
         protected String doInBackground(String... params) {
-
             HttpURLConnection connection = null;
             BufferedReader reader = null;
-
             try {
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
+                // Get input stream from the connection
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
 
                 StringBuffer buffer = new StringBuffer();
                 String line;
 
+                // Read data line by line
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line).append("\n");
                     Log.d("Response: ", "> " + line);
                 }
-
                 return buffer.toString();
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -103,11 +106,11 @@ public class Ranking extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            // JSON to ArrayList
+            // Convert JSON to ArrayList
             ArrayList<Users> arrayList = convert_UsersJSonToArrayList(result);
             Log.v("Result: ", "> " + arrayList);
 
-            //ArrayList to Array
+            // Convert ArrayList to Array
             Users[] users_data = arrayList.toArray(new Users[arrayList.size()]);
             UsersAdapter adapter = new UsersAdapter(Ranking.this, R.layout.list_item_ranking, users_data);
             lv.setAdapter(adapter);
@@ -119,12 +122,12 @@ public class Ranking extends AppCompatActivity {
 
             try {
                 jsonObjTable = new JSONObject(jsonStr);
-                //get the table
+                // Get the "users" table
                 JSONArray jsonArrayTable = jsonObjTable.getJSONArray("users");
 
-                // looping through All Contacts
+                // Loop through all contacts
                 for (int i = 0; i < jsonArrayTable.length(); i++) {
-                    //get on row
+                    // Get one row
                     JSONObject jsonObjRow = jsonArrayTable.getJSONObject(i);
                     Users users = new Users();
                     users.name = jsonObjRow.getString("name");
@@ -143,6 +146,7 @@ public class Ranking extends AppCompatActivity {
             return arrayList;
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

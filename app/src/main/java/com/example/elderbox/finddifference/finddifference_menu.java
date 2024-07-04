@@ -17,20 +17,19 @@ public class finddifference_menu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.finddifference_activity_menu);
+        EdgeToEdge.enable(this); // Enable edge-to-edge display
+        setContentView(R.layout.finddifference_activity_menu); // Set the layout for this activity
 
-        ImageView playbutton = (ImageView) findViewById(R.id.play);
+        ImageView playbutton = (ImageView) findViewById(R.id.play); // Find the play button ImageView
 
         playbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(finddifference_menu.this, finddifference_stage1.class));
+                startActivity(new Intent(finddifference_menu.this, finddifference_stage1.class)); // Start the stage1 activity
             }
         });
-
-
     }
+
 
     @Override
     protected void onResume() {
